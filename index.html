@@ -21,13 +21,9 @@
 body {
 
     margin: 0;
-
     padding: 20px;
-
     background: #f5f5f5;
-
     font-family: Arial, sans-serif;
-
     text-align: center;
 
 }
@@ -35,15 +31,10 @@ body {
 .container {
 
     width: 100%;
-
     max-width: 430px;
-
     margin: auto;
-
     background: white;
-
     border-radius: 20px;
-
     padding: 25px 20px 30px;
 
     box-shadow:
@@ -54,9 +45,7 @@ body {
 .logo {
 
     font-size: 30px;
-
     font-weight: bold;
-
     margin-bottom: 5px;
 
 }
@@ -64,9 +53,7 @@ body {
 .subtitulo {
 
     font-size: 18px;
-
     font-weight: bold;
-
     margin-bottom: 25px;
 
 }
@@ -74,7 +61,6 @@ body {
 .instrucao {
 
     color: #666;
-
     margin-bottom: 20px;
 
 }
@@ -82,7 +68,6 @@ body {
 #reader {
 
     width: 100%;
-
     margin: auto;
 
 }
@@ -90,7 +75,6 @@ body {
 .estado {
 
     margin-top: 20px;
-
     font-size: 16px;
 
 }
@@ -98,7 +82,6 @@ body {
 .erro {
 
     color: #d93025;
-
     font-weight: bold;
 
 }
@@ -106,7 +89,6 @@ body {
 .sucesso {
 
     color: #16803c;
-
     font-weight: bold;
 
 }
@@ -114,21 +96,13 @@ body {
 button {
 
     width: 100%;
-
     padding: 15px;
-
     margin-top: 20px;
-
     border: none;
-
     border-radius: 10px;
-
     background: #111;
-
     color: white;
-
     font-size: 17px;
-
     cursor: pointer;
 
 }
@@ -168,9 +142,18 @@ button {
     <div id="estado"
          class="estado">
 
-        A iniciar câmara...
+        A preparar a câmara...
 
     </div>
+
+
+    <button
+        id="botaoCamara"
+        onclick="iniciarScanner()">
+
+        📷 ABRIR CÂMARA
+
+    </button>
 
 
 </div>
@@ -183,104 +166,243 @@ button {
 // CONFIGURAÇÃO
 // =====================================================
 
-
-// COLOCA AQUI O ENDEREÇO DA TUA APLICAÇÃO
-// DO GOOGLE APPS SCRIPT.
-//
-// EXEMPLO:
-// https://script.google.com/macros/s/XXXXXXXXXXXX/exec
-
 const APPS_SCRIPT_URL =
-"https://script.google.com/macros/s/AKfycbyIH5DXiwubtkRrscwGybkECxhBHI6FSabCt4p8-1EjD3EIfZE93hq2wWfkKJL-e_mrUQ/exec";
+"https://script.google.com/macros/s/AKfycbvIH5DXiwubtKRscwGybkECXhBHI6FSabCt4p8-1EjD3ElfZE93hq2wWfkKJL-e_mrUQ/exec";
 
 
 
 // =====================================================
-// SCANNER
+// VARIÁVEIS
 // =====================================================
 
 let scanner = null;
+
+let scannerAtivo = false;
 
 let codigoJaLido = false;
 
 
 
-function iniciarScanner() {
+// =====================================================
+// PARAR CÂMARA CORRETAMENTE
+// =====================================================
+
+async function pararScanner() {
+
+    if (!scanner || !scannerAtivo) {
+        return;
+    }
 
 
-    scanner =
-        new Html5Qrcode("reader");
+    try {
+
+        await scanner.stop();
+
+    }
+
+    catch (erro) {
+
+        console.log(
+            "Erro ao parar scanner:",
+            erro
+        );
+
+    }
 
 
-    const configuracao = {
-
-        fps: 10,
-
-        qrbox: {
-
-            width: 250,
-
-            height: 250
-
-        }
-
-    };
+    scannerAtivo = false;
 
 
-    scanner.start(
+    try {
 
-        {
-            facingMode: "environment"
-        },
+        await scanner.clear();
 
-        configuracao,
+    }
 
+    catch (erro) {
 
-        function(decodedText) {
+        console.log(
+            "Erro ao limpar scanner:",
+            erro
+        );
 
+    }
 
-            if (codigoJaLido) {
-                return;
-            }
-
-
-            codigoJaLido = true;
+}
 
 
-            document
-                .getElementById("estado")
-                .innerHTML =
-                "✅ QR Code encontrado. A abrir oferta...";
 
+// =====================================================
+// INICIAR SCANNER
+// =====================================================
+
+async function iniciarScanner() {
+
+
+    if (scannerAtivo) {
+        return;
+    }
+
+
+    codigoJaLido = false;
+
+
+    document
+        .getElementById("botaoCamara")
+        .style.display = "none";
+
+
+    document
+        .getElementById("estado")
+        .innerHTML =
+        "📷 A abrir a câmara...";
+
+
+    try {
+
+
+        if (scanner) {
 
             try {
 
-                scanner.stop();
+                await scanner.clear();
 
             }
 
-            catch (erro) {
-
-                console.log(erro);
-
-            }
-
-
-            processarQR(decodedText);
-
-        },
-
-
-        function(errorMessage) {
-
-            // Ignorar erros normais
-            // enquanto procura o QR Code.
+            catch (erro) {}
 
         }
 
-    )
 
-    .catch(function(error) {
+        scanner =
+            new Html5Qrcode("reader");
+
+
+        await scanner.start(
+
+
+            {
+                facingMode: "environment"
+            },
+
+
+            {
+
+                fps: 10,
+
+                qrbox: {
+
+                    width: 250,
+
+                    height: 250
+
+                }
+
+            },
+
+
+            async function(decodedText) {
+
+
+                if (codigoJaLido) {
+                    return;
+                }
+
+
+                codigoJaLido = true;
+
+
+                document
+                    .getElementById("estado")
+                    .innerHTML =
+
+                    "<span class='sucesso'>" +
+                    "✅ QR Code encontrado." +
+                    "</span>" +
+
+                    "<br><br>" +
+
+                    "A abrir oferta...";
+
+
+                // MUITO IMPORTANTE:
+                // esperar a câmara fechar antes
+                // de mudar de página
+
+                await pararScanner();
+
+
+                // pequena pausa adicional para
+                // o navegador libertar a câmara
+
+                await new Promise(
+                    resolve =>
+                        setTimeout(resolve, 500)
+                );
+
+
+                processarQR(decodedText);
+
+            },
+
+
+            function(errorMessage) {
+
+                // erros normais enquanto procura
+                // um QR Code são ignorados
+
+            }
+
+        );
+
+
+        scannerAtivo = true;
+
+
+        document
+            .getElementById("estado")
+            .innerHTML =
+
+            "<span class='sucesso'>" +
+            "🟢 Câmara pronta" +
+            "</span>" +
+
+            "<br>" +
+
+            "Aponta para o QR Code.";
+
+
+    }
+
+    catch (erro) {
+
+
+        scannerAtivo = false;
+
+
+        console.error(erro);
+
+
+        let mensagem =
+            "❌ Não foi possível abrir a câmara.";
+
+
+        if (
+            erro &&
+            String(erro).includes(
+                "NotReadableError"
+            )
+        ) {
+
+            mensagem =
+
+                "⚠️ A câmara ainda está ocupada." +
+
+                "<br><br>" +
+
+                "Espera 2 segundos e carrega novamente em ABRIR CÂMARA.";
+
+        }
 
 
         document
@@ -289,18 +411,16 @@ function iniciarScanner() {
 
             "<span class='erro'>" +
 
-            "❌ Não foi possível abrir a câmara." +
-
-            "<br><br>" +
-
-            "Verifica se deste permissão à câmara." +
+            mensagem +
 
             "</span>";
 
 
-        console.error(error);
+        document
+            .getElementById("botaoCamara")
+            .style.display = "block";
 
-    });
+    }
 
 }
 
@@ -319,16 +439,14 @@ function processarQR(decodedText) {
     try {
 
 
-        // O QR normalmente contém
-        // o endereço do Apps Script.
-
-
         const url =
             new URL(decodedText);
 
 
         codigo =
-            url.searchParams.get("codigo");
+            url.searchParams.get(
+                "codigo"
+            ) || "";
 
 
     }
@@ -336,14 +454,11 @@ function processarQR(decodedText) {
     catch (erro) {
 
 
-        // Se o QR contiver apenas
-        // o código TGT-XXXXXX
-
-
         codigo =
             decodedText.trim();
 
     }
+
 
 
     if (!codigo) {
@@ -360,15 +475,22 @@ function processarQR(decodedText) {
             "</span>";
 
 
+        document
+            .getElementById("botaoCamara")
+            .style.display = "block";
+
+
         codigoJaLido = false;
+
 
         return;
 
     }
 
 
+
     // =================================================
-    // ENVIAR PARA O APPS SCRIPT
+    // ABRIR APPS SCRIPT
     // =================================================
 
 
@@ -389,13 +511,49 @@ function processarQR(decodedText) {
 
 
 // =====================================================
-// INICIAR
+// SE A PÁGINA FOR ESCONDIDA/FECHADA,
+// TENTAR LIBERTAR A CÂMARA
 // =====================================================
 
-window.addEventListener(
-    "load",
-    iniciarScanner
+document.addEventListener(
+    "visibilitychange",
+    function() {
+
+        if (
+            document.hidden &&
+            scannerAtivo
+        ) {
+
+            pararScanner();
+
+        }
+
+    }
 );
+
+
+
+window.addEventListener(
+    "pagehide",
+    function() {
+
+        if (scannerAtivo) {
+
+            pararScanner();
+
+        }
+
+    }
+);
+
+
+// =====================================================
+// NÃO ABRIMOS A CÂMARA AUTOMATICAMENTE
+//
+// Isto é intencional.
+// O funcionário carrega em "ABRIR CÂMARA".
+// É mais fiável em telemóveis.
+// =====================================================
 
 
 </script>
