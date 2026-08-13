@@ -2,7 +2,6 @@
 <html lang="pt-PT">
 
 <head>
-
 <meta charset="UTF-8">
 
 <meta name="viewport"
@@ -19,82 +18,62 @@
 }
 
 body {
-
     margin: 0;
     padding: 20px;
     background: #f5f5f5;
     font-family: Arial, sans-serif;
     text-align: center;
-
 }
 
 .container {
-
     width: 100%;
     max-width: 430px;
     margin: auto;
     background: white;
     border-radius: 20px;
     padding: 25px 20px 30px;
-
-    box-shadow:
-        0 5px 25px rgba(0,0,0,0.08);
-
+    box-shadow: 0 5px 25px rgba(0,0,0,0.08);
 }
 
 .logo {
-
     font-size: 30px;
     font-weight: bold;
     margin-bottom: 5px;
-
 }
 
 .subtitulo {
-
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 25px;
-
 }
 
 .instrucao {
-
     color: #666;
     margin-bottom: 20px;
-
 }
 
 #reader {
-
     width: 100%;
     margin: auto;
-
 }
 
 .estado {
-
     margin-top: 20px;
     font-size: 16px;
-
+    line-height: 1.5;
 }
 
 .erro {
-
     color: #d93025;
     font-weight: bold;
-
 }
 
 .sucesso {
-
     color: #16803c;
     font-weight: bold;
-
 }
 
 button {
-
     width: 100%;
     padding: 15px;
     margin-top: 20px;
@@ -104,7 +83,10 @@ button {
     color: white;
     font-size: 17px;
     cursor: pointer;
+}
 
+button:active {
+    transform: scale(0.98);
 }
 
 </style>
@@ -114,53 +96,37 @@ button {
 
 <body>
 
-
 <div class="container">
-
 
     <div class="logo">
         🔥 TugaTrendz
     </div>
 
-
     <div class="subtitulo">
         Scanner de ofertas
     </div>
 
-
     <p class="instrucao">
-
-        Aponta a câmara para o QR Code
-        apresentado pelo cliente.
-
+        Aponta a câmara para o QR Code apresentado pelo cliente.
     </p>
-
 
     <div id="reader"></div>
 
-
     <div id="estado"
          class="estado">
-
-        A preparar a câmara...
-
+        Carrega no botão para iniciar.
     </div>
-
 
     <button
         id="botaoCamara"
         onclick="iniciarScanner()">
-
         📷 ABRIR CÂMARA
-
     </button>
-
 
 </div>
 
 
 <script>
-
 
 // =====================================================
 // CONFIGURAÇÃO
@@ -184,22 +150,22 @@ let codigoJaLido = false;
 
 
 // =====================================================
-// PARAR CÂMARA CORRETAMENTE
+// PARAR SCANNER
 // =====================================================
 
 async function pararScanner() {
 
-    if (!scanner || !scannerAtivo) {
+    if (!scanner) {
         return;
     }
 
-
     try {
 
-        await scanner.stop();
+        if (scannerAtivo) {
+            await scanner.stop();
+        }
 
     }
-
     catch (erro) {
 
         console.log(
@@ -209,7 +175,6 @@ async function pararScanner() {
 
     }
 
-
     scannerAtivo = false;
 
 
@@ -218,7 +183,6 @@ async function pararScanner() {
         await scanner.clear();
 
     }
-
     catch (erro) {
 
         console.log(
@@ -237,7 +201,6 @@ async function pararScanner() {
 // =====================================================
 
 async function iniciarScanner() {
-
 
     if (scannerAtivo) {
         return;
@@ -264,11 +227,8 @@ async function iniciarScanner() {
         if (scanner) {
 
             try {
-
                 await scanner.clear();
-
             }
-
             catch (erro) {}
 
         }
@@ -280,24 +240,17 @@ async function iniciarScanner() {
 
         await scanner.start(
 
-
             {
                 facingMode: "environment"
             },
 
-
             {
-
                 fps: 10,
 
                 qrbox: {
-
                     width: 250,
-
                     height: 250
-
                 }
-
             },
 
 
@@ -325,19 +278,14 @@ async function iniciarScanner() {
                     "A abrir oferta...";
 
 
-                // MUITO IMPORTANTE:
-                // esperar a câmara fechar antes
-                // de mudar de página
-
+                // Esperar que a câmara seja libertada
                 await pararScanner();
 
 
-                // pequena pausa adicional para
-                // o navegador libertar a câmara
-
+                // Pequena pausa adicional
                 await new Promise(
                     resolve =>
-                        setTimeout(resolve, 500)
+                        setTimeout(resolve, 700)
                 );
 
 
@@ -348,8 +296,7 @@ async function iniciarScanner() {
 
             function(errorMessage) {
 
-                // erros normais enquanto procura
-                // um QR Code são ignorados
+                // Ignorar erros normais durante leitura
 
             }
 
@@ -371,7 +318,6 @@ async function iniciarScanner() {
 
             "Aponta para o QR Code.";
 
-
     }
 
     catch (erro) {
@@ -387,11 +333,13 @@ async function iniciarScanner() {
             "❌ Não foi possível abrir a câmara.";
 
 
+        const textoErro =
+            String(erro || "");
+
+
         if (
-            erro &&
-            String(erro).includes(
-                "NotReadableError"
-            )
+            textoErro.includes("NotReadableError") ||
+            textoErro.includes("Could not start video source")
         ) {
 
             mensagem =
@@ -400,7 +348,23 @@ async function iniciarScanner() {
 
                 "<br><br>" +
 
-                "Espera 2 segundos e carrega novamente em ABRIR CÂMARA.";
+                "Espera 2 segundos e tenta novamente.";
+
+        }
+
+
+        if (
+            textoErro.includes("NotAllowedError") ||
+            textoErro.includes("Permission")
+        ) {
+
+            mensagem =
+
+                "❌ O acesso à câmara não foi autorizado." +
+
+                "<br><br>" +
+
+                "Verifica as permissões do navegador.";
 
         }
 
@@ -410,9 +374,7 @@ async function iniciarScanner() {
             .innerHTML =
 
             "<span class='erro'>" +
-
             mensagem +
-
             "</span>";
 
 
@@ -432,36 +394,71 @@ async function iniciarScanner() {
 
 function processarQR(decodedText) {
 
-
     let codigo = "";
 
+    const texto =
+        String(decodedText).trim();
 
-    try {
+
+    // =================================================
+    // 1. PROCURAR DIRETAMENTE UM CÓDIGO TGT-
+    //
+    // Isto faz com que ignoremos qualquer
+    // URL antigo que possa estar dentro do QR.
+    // =================================================
+
+    const match =
+        texto.match(/TGT-[A-Z0-9]+/i);
 
 
-        const url =
-            new URL(decodedText);
-
+    if (match) {
 
         codigo =
-            url.searchParams.get(
-                "codigo"
-            ) || "";
-
+            match[0].toUpperCase();
 
     }
 
-    catch (erro) {
+
+    else {
+
+        // =================================================
+        // 2. TENTAR LER COMO URL
+        // =================================================
+
+        try {
+
+            const url =
+                new URL(texto);
 
 
-        codigo =
-            decodedText.trim();
+            codigo =
+                url.searchParams.get("codigo") || "";
+
+        }
+
+        catch (erro) {
+
+            codigo = texto;
+
+        }
 
     }
 
 
+    codigo =
+        codigo
+            .trim()
+            .toUpperCase();
 
-    if (!codigo) {
+
+    // =================================================
+    // VERIFICAÇÃO FINAL
+    // =================================================
+
+    if (
+        !codigo ||
+        !codigo.startsWith("TGT-")
+    ) {
 
 
         document
@@ -470,7 +467,7 @@ function processarQR(decodedText) {
 
             "<span class='erro'>" +
 
-            "❌ QR Code inválido." +
+            "❌ Este QR Code não é uma oferta TugaTrendz." +
 
             "</span>";
 
@@ -488,11 +485,12 @@ function processarQR(decodedText) {
     }
 
 
-
     // =================================================
-    // ABRIR APPS SCRIPT
+    // CONSTRUIR SEMPRE UM URL NOVO
+    //
+    // Nunca usamos o endereço que estiver
+    // dentro do próprio QR.
     // =================================================
-
 
     const destino =
 
@@ -503,6 +501,18 @@ function processarQR(decodedText) {
         encodeURIComponent(codigo);
 
 
+    console.log(
+        "Código detetado:",
+        codigo
+    );
+
+
+    console.log(
+        "Destino:",
+        destino
+    );
+
+
     window.location.href =
         destino;
 
@@ -511,8 +521,7 @@ function processarQR(decodedText) {
 
 
 // =====================================================
-// SE A PÁGINA FOR ESCONDIDA/FECHADA,
-// TENTAR LIBERTAR A CÂMARA
+// LIBERTAR CÂMARA SE SAIRMOS DA PÁGINA
 // =====================================================
 
 document.addEventListener(
@@ -547,17 +556,16 @@ window.addEventListener(
 );
 
 
-// =====================================================
-// NÃO ABRIMOS A CÂMARA AUTOMATICAMENTE
-//
-// Isto é intencional.
-// O funcionário carrega em "ABRIR CÂMARA".
-// É mais fiável em telemóveis.
-// =====================================================
 
+// =====================================================
+// IMPORTANTE
+//
+// NÃO iniciamos automaticamente a câmara.
+// O funcionário tem sempre de carregar
+// em "ABRIR CÂMARA".
+// =====================================================
 
 </script>
-
 
 </body>
 
