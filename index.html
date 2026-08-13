@@ -2,6 +2,7 @@
 <html lang="pt-PT">
 
 <head>
+
 <meta charset="UTF-8">
 
 <meta name="viewport"
@@ -26,6 +27,7 @@ body {
 }
 
 .box {
+    width: 100%;
     max-width: 430px;
     margin: auto;
     background: white;
@@ -40,7 +42,7 @@ body {
 }
 
 .restaurante {
-    margin-top: 6px;
+    margin-top: 7px;
     margin-bottom: 25px;
     font-size: 17px;
     font-weight: bold;
@@ -50,6 +52,7 @@ body {
 input {
     width: 100%;
     padding: 15px;
+    margin-top: 10px;
     font-size: 20px;
     border: 1px solid #ddd;
     border-radius: 10px;
@@ -60,7 +63,7 @@ button {
     width: 100%;
     padding: 15px;
     margin-top: 15px;
-    border: none;
+    border: 0;
     border-radius: 10px;
     background: #111;
     color: white;
@@ -73,8 +76,7 @@ button.verde {
 }
 
 button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
+    opacity: .5;
 }
 
 #cameraArea {
@@ -83,8 +85,9 @@ button:disabled {
 
 .videoBox {
     width: 100%;
+    position: relative;
     overflow: hidden;
-    border-radius: 15px;
+    border-radius: 16px;
     background: #000;
     margin-top: 20px;
 }
@@ -93,6 +96,24 @@ video {
     display: block;
     width: 100%;
     height: auto;
+}
+
+.mira {
+    position: absolute;
+    width: 62%;
+    aspect-ratio: 1 / 1;
+
+    left: 19%;
+    top: 50%;
+    transform: translateY(-50%);
+
+    border: 3px solid white;
+    border-radius: 14px;
+
+    pointer-events: none;
+
+    box-shadow:
+        0 0 0 9999px rgba(0,0,0,.18);
 }
 
 canvas {
@@ -116,20 +137,21 @@ canvas {
 
 .oferta {
     background: #f6f6f6;
-    padding: 20px;
     border-radius: 15px;
+    padding: 20px;
     margin-top: 20px;
 }
 
 .codigo {
-    font-size: 20px;
+    font-size: 21px;
     font-weight: bold;
-    margin: 12px;
+    margin: 12px 0;
 }
 
 </style>
 
 </head>
+
 
 <body>
 
@@ -139,9 +161,12 @@ canvas {
         🔥 TugaTrendz
     </div>
 
-    <div id="nomeRestaurante"
-         class="restaurante">
+    <div
+        id="nomeRestaurante"
+        class="restaurante">
+
         Scanner de ofertas
+
     </div>
 
 
@@ -157,13 +182,16 @@ canvas {
             id="pin"
             type="password"
             inputmode="numeric"
+            autocomplete="off"
             placeholder="PIN"
         >
 
         <button
             id="botaoEntrar"
             onclick="entrar()">
+
             ENTRAR
+
         </button>
 
     </div>
@@ -180,8 +208,11 @@ canvas {
         <button
             id="botaoAbrir"
             onclick="abrirCamara()">
+
             📷 ABRIR CÂMARA
+
         </button>
+
 
         <div
             id="videoBox"
@@ -191,9 +222,11 @@ canvas {
             <video
                 id="video"
                 autoplay
-                playsinline
-                muted>
+                muted
+                playsinline>
             </video>
+
+            <div class="mira"></div>
 
         </div>
 
@@ -207,10 +240,11 @@ canvas {
 </div>
 
 
+
 <script>
 
 // ========================================================
-// CONFIGURAÇÃO
+// APPS SCRIPT
 // ========================================================
 
 const APPS_SCRIPT_URL =
@@ -219,24 +253,25 @@ const APPS_SCRIPT_URL =
 
 
 // ========================================================
-// RESTAURANTE
+// RESTAURANTE DO SCANNER
 //
 // Exemplo:
 // ?restaurante=R001
 // ========================================================
 
-const params =
+const parametros =
     new URLSearchParams(
-        window.location.search
+        location.search
     );
 
 const restauranteId =
-    params.get("restaurante") || "R001";
+    parametros.get("restaurante")
+    || "R001";
 
 
 
 // ========================================================
-// VARIÁVEIS
+// ESTADO
 // ========================================================
 
 let pinRestaurante =
@@ -254,11 +289,13 @@ let processamento = false;
 
 let codigoAtual = null;
 
-let animationId = null;
+let animationFrameId = null;
 
-let ultimoCodigo = null;
+let ultimoFrame = 0;
 
-let ultimoCodigoTempo = 0;
+let ultimoQrLido = "";
+
+let ultimoQrTempo = 0;
 
 
 const video =
@@ -267,7 +304,7 @@ const video =
 const canvas =
     document.getElementById("canvas");
 
-const ctx =
+const contexto =
     canvas.getContext(
         "2d",
         {
@@ -279,20 +316,26 @@ const ctx =
 
 // ========================================================
 // JSONP
-// Comunicação com Apps Script SEM sair desta página
+//
+// Comunica com o Apps Script sem navegar
+// para outra página.
 // ========================================================
 
-function jsonp(params) {
+function jsonp(parametros) {
 
     return new Promise(
         function(resolve, reject) {
 
             const callback =
-                "tgCallback_" +
+
+                "tugaCallback_" +
+
                 Date.now() +
+
                 "_" +
+
                 Math.floor(
-                    Math.random() * 100000
+                    Math.random() * 1000000
                 );
 
 
@@ -317,12 +360,12 @@ function jsonp(params) {
 
                         reject(
                             new Error(
-                                "Tempo esgotado."
+                                "Tempo esgotado"
                             )
                         );
 
                     },
-                    12000
+                    15000
                 );
 
 
@@ -334,6 +377,7 @@ function jsonp(params) {
                     delete window[callback];
                 }
                 catch(e) {}
+
 
                 if (script.parentNode) {
 
@@ -362,7 +406,9 @@ function jsonp(params) {
 
 
             const query =
-                new URLSearchParams(params);
+                new URLSearchParams(
+                    parametros
+                );
 
 
             query.set(
@@ -396,14 +442,15 @@ function jsonp(params) {
 
                     reject(
                         new Error(
-                            "Erro de ligação."
+                            "Erro de ligação"
                         )
                     );
 
                 };
 
 
-            document.body.appendChild(script);
+            document.body
+                .appendChild(script);
 
         }
     );
@@ -495,15 +542,15 @@ async function entrar() {
         );
 
 
-        abrirAreaScanner(
+        entrarNoScanner(
             resposta.restaurante
         );
 
     }
 
-    catch(e) {
+    catch(erro) {
 
-        console.error(e);
+        console.error(erro);
 
         mostrarErro(
             "Não foi possível ligar ao sistema."
@@ -518,7 +565,7 @@ async function entrar() {
 
 
 // ========================================================
-// RECUPERAR LOGIN GUARDADO
+// RECUPERAR PIN GUARDADO
 // ========================================================
 
 async function recuperarSessao() {
@@ -570,15 +617,15 @@ async function recuperarSessao() {
         }
 
 
-        abrirAreaScanner(
+        entrarNoScanner(
             resposta.restaurante
         );
 
     }
 
-    catch(e) {
+    catch(erro) {
 
-        console.error(e);
+        console.error(erro);
 
         document
             .getElementById("resultado")
@@ -591,31 +638,39 @@ async function recuperarSessao() {
 
 
 // ========================================================
-// MOSTRAR ÁREA DO SCANNER
+// MOSTRAR SCANNER
 // ========================================================
 
-function abrirAreaScanner(nome) {
+function entrarNoScanner(nomeRestaurante) {
 
     document
-        .getElementById("nomeRestaurante")
+        .getElementById(
+            "nomeRestaurante"
+        )
         .textContent =
-        nome || "TugaTrendz";
+        nomeRestaurante;
 
 
     document
-        .getElementById("loginArea")
+        .getElementById(
+            "loginArea"
+        )
         .style.display =
         "none";
 
 
     document
-        .getElementById("cameraArea")
+        .getElementById(
+            "cameraArea"
+        )
         .style.display =
         "block";
 
 
     document
-        .getElementById("resultado")
+        .getElementById(
+            "resultado"
+        )
         .innerHTML = "";
 
 }
@@ -625,14 +680,16 @@ function abrirAreaScanner(nome) {
 // ========================================================
 // ABRIR CÂMARA
 //
-// getUserMedia é chamado aqui.
-// Depois NÃO fechamos a câmara entre QR Codes.
+// ESTE É O ÚNICO LOCAL ONDE PEDIMOS
+// getUserMedia.
+//
+// Depois o stream fica aberto.
 // ========================================================
 
 async function abrirCamara() {
 
-    // Se a câmara já estiver aberta,
-    // NÃO pedimos novamente permissão.
+    // Já existe câmara aberta?
+    // Não pedir novamente.
 
     if (
         cameraAberta &&
@@ -640,32 +697,11 @@ async function abrirCamara() {
         stream.active
     ) {
 
-        processamento = false;
-
         detecaoAtiva = true;
 
-        document
-            .getElementById("botaoAbrir")
-            .style.display =
-            "none";
+        processamento = false;
 
-
-        document
-            .getElementById("videoBox")
-            .style.display =
-            "block";
-
-
-        document
-            .getElementById("resultado")
-            .innerHTML =
-
-            "<span class='sucesso'>" +
-            "🟢 Câmara pronta" +
-            "</span>";
-
-
-        iniciarDetecao();
+        iniciarLoop();
 
         return;
 
@@ -721,23 +757,31 @@ async function abrirCamara() {
 
 
         document
-            .getElementById("botaoAbrir")
+            .getElementById(
+                "botaoAbrir"
+            )
             .style.display =
             "none";
 
 
         document
-            .getElementById("videoBox")
+            .getElementById(
+                "videoBox"
+            )
             .style.display =
             "block";
 
 
         document
-            .getElementById("resultado")
+            .getElementById(
+                "resultado"
+            )
             .innerHTML =
 
             "<span class='sucesso'>" +
+
             "🟢 Câmara pronta" +
+
             "</span>" +
 
             "<br>" +
@@ -745,15 +789,15 @@ async function abrirCamara() {
             "Aponta para o QR Code.";
 
 
-        iniciarDetecao();
+        iniciarLoop();
 
     }
 
-    catch(e) {
+    catch(erro) {
 
         console.error(
-            "ERRO CÂMARA:",
-            e
+            "Erro da câmara:",
+            erro
         );
 
 
@@ -767,34 +811,34 @@ async function abrirCamara() {
 
 
         if (
-            e &&
-            e.name === "NotAllowedError"
+            erro &&
+            erro.name === "NotAllowedError"
         ) {
 
             mensagem =
-                "O acesso à câmara foi recusado pelo navegador.";
+                "O acesso à câmara não foi autorizado. Verifica as permissões do navegador.";
 
         }
 
 
         else if (
-            e &&
-            e.name === "NotFoundError"
+            erro &&
+            erro.name === "NotReadableError"
+        ) {
+
+            mensagem =
+                "A câmara está ocupada por outra aplicação.";
+
+        }
+
+
+        else if (
+            erro &&
+            erro.name === "NotFoundError"
         ) {
 
             mensagem =
                 "Não foi encontrada nenhuma câmara.";
-
-        }
-
-
-        else if (
-            e &&
-            e.name === "NotReadableError"
-        ) {
-
-            mensagem =
-                "A câmara está a ser utilizada por outra aplicação.";
 
         }
 
@@ -810,150 +854,187 @@ async function abrirCamara() {
 
 
 // ========================================================
-// DETEÇÃO CONTÍNUA DE QR
+// LOOP DE LEITURA
 // ========================================================
 
-function iniciarDetecao() {
+function iniciarLoop() {
 
-    if (animationId) {
+    if (animationFrameId) {
 
         cancelAnimationFrame(
-            animationId
+            animationFrameId
         );
 
-        animationId = null;
+        animationFrameId = null;
 
     }
 
 
-    function tick() {
+    function loop(timestamp) {
 
         if (
             !cameraAberta ||
             !stream
         ) {
 
-            animationId = null;
+            animationFrameId = null;
 
             return;
 
         }
 
 
+        // Não precisamos de processar
+        // 60 frames por segundo.
+        //
+        // ~7 análises/segundo.
+
         if (
-            detecaoAtiva &&
-            !processamento &&
-            video.readyState ===
-            video.HAVE_ENOUGH_DATA &&
-            video.videoWidth > 0 &&
-            video.videoHeight > 0
+            timestamp - ultimoFrame >= 140
         ) {
 
-            canvas.width =
-                video.videoWidth;
-
-
-            canvas.height =
-                video.videoHeight;
-
-
-            ctx.drawImage(
-
-                video,
-
-                0,
-                0,
-
-                canvas.width,
-                canvas.height
-
-            );
-
-
-            const imagem =
-                ctx.getImageData(
-
-                    0,
-                    0,
-
-                    canvas.width,
-                    canvas.height
-
-                );
-
-
-            const qr =
-                jsQR(
-
-                    imagem.data,
-
-                    imagem.width,
-
-                    imagem.height,
-
-                    {
-                        inversionAttempts:
-                            "attemptBoth"
-                    }
-
-                );
+            ultimoFrame = timestamp;
 
 
             if (
-                qr &&
-                qr.data
+                detecaoAtiva &&
+                !processamento &&
+                video.readyState >= 2 &&
+                video.videoWidth > 0 &&
+                video.videoHeight > 0
             ) {
 
-                const agora =
-                    Date.now();
-
-
-                // Evitar ler o mesmo QR
-                // várias vezes imediatamente.
-
-                if (
-                    qr.data !== ultimoCodigo ||
-                    agora - ultimoCodigoTempo > 3000
-                ) {
-
-                    ultimoCodigo =
-                        qr.data;
-
-
-                    ultimoCodigoTempo =
-                        agora;
-
-
-                    qrLido(
-                        qr.data
-                    );
-
-                }
+                analisarFrame();
 
             }
 
         }
 
 
-        animationId =
+        animationFrameId =
             requestAnimationFrame(
-                tick
+                loop
             );
 
     }
 
 
-    tick();
+    animationFrameId =
+        requestAnimationFrame(
+            loop
+        );
 
 }
 
 
 
 // ========================================================
-// QR DETETADO
+// ANALISAR FRAME
 // ========================================================
 
-async function qrLido(texto) {
+function analisarFrame() {
+
+    canvas.width =
+        video.videoWidth;
+
+
+    canvas.height =
+        video.videoHeight;
+
+
+    contexto.drawImage(
+
+        video,
+
+        0,
+        0,
+
+        canvas.width,
+        canvas.height
+
+    );
+
+
+    const frame =
+        contexto.getImageData(
+
+            0,
+            0,
+
+            canvas.width,
+            canvas.height
+
+        );
+
+
+    const qr =
+        jsQR(
+
+            frame.data,
+
+            frame.width,
+
+            frame.height,
+
+            {
+                inversionAttempts:
+                    "attemptBoth"
+            }
+
+        );
+
+
+    if (
+        !qr ||
+        !qr.data
+    ) {
+
+        return;
+
+    }
+
+
+    const agora =
+        Date.now();
+
+
+    // Proteção contra leitura repetida
+    // do mesmo QR.
+
+    if (
+        qr.data === ultimoQrLido &&
+        agora - ultimoQrTempo < 3000
+    ) {
+
+        return;
+
+    }
+
+
+    ultimoQrLido =
+        qr.data;
+
+
+    ultimoQrTempo =
+        agora;
+
+
+    processarQR(
+        qr.data
+    );
+
+}
+
+
+
+// ========================================================
+// PROCESSAR QR
+//
+// A CÂMARA NÃO FECHA.
+// A PÁGINA NÃO MUDA.
+// ========================================================
+
+async function processarQR(textoQr) {
 
     if (processamento) {
         return;
@@ -962,31 +1043,29 @@ async function qrLido(texto) {
 
     processamento = true;
 
-
-    // MUITO IMPORTANTE:
-    //
-    // Só desligamos a DETEÇÃO.
-    // NÃO paramos o vídeo.
-    // NÃO paramos o MediaStream.
-    // NÃO saímos da página.
-
     detecaoAtiva = false;
 
 
     document
-        .getElementById("resultado")
+        .getElementById(
+            "resultado"
+        )
         .innerHTML =
         "🔎 A validar oferta...";
 
 
     const codigo =
-        extrairCodigo(texto);
+        extrairCodigo(
+            textoQr
+        );
 
 
     if (!codigo) {
 
-        mostrarResultadoErro(
-            "Este QR Code não é uma oferta TugaTrendz."
+        mostrarErroScan(
+
+            "Este QR não pertence à TugaTrendz."
+
         );
 
         return;
@@ -1019,7 +1098,7 @@ async function qrLido(texto) {
 
         if (!resposta.ok) {
 
-            mostrarResultadoErro(
+            mostrarErroScan(
 
                 resposta.mensagem ||
                 "Oferta inválida."
@@ -1037,13 +1116,15 @@ async function qrLido(texto) {
 
     }
 
-    catch(e) {
+    catch(erro) {
 
-        console.error(e);
+        console.error(erro);
 
 
-        mostrarResultadoErro(
-            "Erro ao validar a oferta."
+        mostrarErroScan(
+
+            "Não foi possível validar a oferta."
+
         );
 
     }
@@ -1053,40 +1134,34 @@ async function qrLido(texto) {
 
 
 // ========================================================
-// EXTRAIR TGT-XXXXXX DO QR
+// EXTRAIR CÓDIGO TGT-XXXXXX
 // ========================================================
 
 function extrairCodigo(texto) {
 
-    texto =
+    const valor =
         String(texto || "")
             .trim();
 
 
-    // Primeiro procura diretamente
-    // TGT-XXXXXX dentro do conteúdo.
-
-    const match =
-        texto.match(
+    const encontrado =
+        valor.match(
             /TGT-[A-Z0-9]+/i
         );
 
 
-    if (match) {
+    if (encontrado) {
 
-        return match[0]
+        return encontrado[0]
             .toUpperCase();
 
     }
 
 
-    // Se for URL, tenta procurar
-    // ?codigo=TGT-XXXXXX
-
     try {
 
         const url =
-            new URL(texto);
+            new URL(valor);
 
 
         const codigo =
@@ -1115,13 +1190,15 @@ function extrairCodigo(texto) {
 
 
 // ========================================================
-// MOSTRAR OFERTA
+// OFERTA VÁLIDA
 // ========================================================
 
 function mostrarOferta(dados) {
 
     document
-        .getElementById("resultado")
+        .getElementById(
+            "resultado"
+        )
         .innerHTML = `
 
         <div class="oferta">
@@ -1139,9 +1216,11 @@ function mostrarOferta(dados) {
 
 
             <strong>
+
                 ${escapeHtml(
                     dados.restaurante
                 )}
+
             </strong>
 
 
@@ -1151,9 +1230,11 @@ function mostrarOferta(dados) {
             🎁
 
             <strong>
+
                 ${escapeHtml(
                     dados.oferta
                 )}
+
             </strong>
 
 
@@ -1161,9 +1242,11 @@ function mostrarOferta(dados) {
 
 
             <div class="codigo">
+
                 ${escapeHtml(
                     dados.codigo
                 )}
+
             </div>
 
 
@@ -1192,7 +1275,7 @@ function mostrarOferta(dados) {
 
 
 // ========================================================
-// CONFIRMAR UTILIZAÇÃO
+// CONFIRMAR
 // ========================================================
 
 async function confirmarUtilizacao() {
@@ -1203,7 +1286,9 @@ async function confirmarUtilizacao() {
 
 
     document
-        .getElementById("resultado")
+        .getElementById(
+            "resultado"
+        )
         .innerHTML =
         "A registar utilização...";
 
@@ -1229,10 +1314,10 @@ async function confirmarUtilizacao() {
 
         if (!resposta.ok) {
 
-            mostrarResultadoErro(
+            mostrarErroScan(
 
                 resposta.mensagem ||
-                "Não foi possível utilizar a oferta."
+                "Não foi possível registar a utilização."
 
             );
 
@@ -1242,7 +1327,9 @@ async function confirmarUtilizacao() {
 
 
         document
-            .getElementById("resultado")
+            .getElementById(
+                "resultado"
+            )
             .innerHTML = `
 
             <div class="oferta">
@@ -1262,9 +1349,11 @@ async function confirmarUtilizacao() {
                 Código:
 
                 <strong>
+
                     ${escapeHtml(
                         resposta.codigo
                     )}
+
                 </strong>
 
 
@@ -1272,9 +1361,11 @@ async function confirmarUtilizacao() {
 
 
                 <strong>
+
                     Visita #${escapeHtml(
                         resposta.visita
                     )}
+
                 </strong>
 
 
@@ -1294,13 +1385,15 @@ async function confirmarUtilizacao() {
 
     }
 
-    catch(e) {
+    catch(erro) {
 
-        console.error(e);
+        console.error(erro);
 
 
-        mostrarResultadoErro(
+        mostrarErroScan(
+
             "Não foi possível registar a utilização."
+
         );
 
     }
@@ -1310,17 +1403,11 @@ async function confirmarUtilizacao() {
 
 
 // ========================================================
-// LER PRÓXIMO QR
+// PRÓXIMO QR
 //
-// ESTA É A PARTE MAIS IMPORTANTE.
-//
-// NÃO:
-// - fecha a página
-// - fecha a câmara
-// - chama getUserMedia novamente
-// - pede nova autorização
-//
-// Apenas volta a ligar a deteção.
+// NÃO SAI DA PÁGINA.
+// NÃO FECHA A CÂMARA.
+// NÃO PEDE OUTRA PERMISSÃO.
 // ========================================================
 
 function proximoQR() {
@@ -1329,91 +1416,43 @@ function proximoQR() {
 
     processamento = false;
 
-    ultimoCodigo = null;
+    detecaoAtiva = true;
 
-    ultimoCodigoTempo = 0;
+    ultimoQrLido = "";
 
-
-    // Se o mesmo MediaStream continua vivo:
-
-    if (
-        stream &&
-        stream.active &&
-        cameraAberta
-    ) {
-
-        detecaoAtiva = true;
-
-
-        document
-            .getElementById("botaoAbrir")
-            .style.display =
-            "none";
-
-
-        document
-            .getElementById("videoBox")
-            .style.display =
-            "block";
-
-
-        document
-            .getElementById("resultado")
-            .innerHTML =
-
-            "<span class='sucesso'>" +
-
-            "🟢 Pronto para o próximo QR" +
-
-            "</span>" +
-
-            "<br>" +
-
-            "Aponta a câmara para o próximo código.";
-
-
-        return;
-
-    }
-
-
-    // Só chegamos aqui se a câmara
-    // tiver realmente sido encerrada
-    // pelo browser/sistema.
-
-    cameraAberta = false;
-
-    detecaoAtiva = false;
+    ultimoQrTempo = 0;
 
 
     document
-        .getElementById("botaoAbrir")
-        .style.display =
-        "block";
-
-
-    document
-        .getElementById("resultado")
+        .getElementById(
+            "resultado"
+        )
         .innerHTML =
 
-        "A sessão da câmara terminou. " +
+        "<span class='sucesso'>" +
 
-        "Carrega em ABRIR CÂMARA.";
+        "🟢 Pronto para o próximo QR" +
+
+        "</span>" +
+
+        "<br>" +
+
+        "Aponta para o próximo código.";
 
 }
 
 
 
 // ========================================================
-// ERRO DURANTE LEITURA
+// ERRO NUM QR
 // ========================================================
 
-function mostrarResultadoErro(
-    mensagem
-) {
+function mostrarErroScan(mensagem) {
 
     document
-        .getElementById("resultado")
+        .getElementById(
+            "resultado"
+        )
         .innerHTML = `
 
         <div class="oferta">
@@ -1427,7 +1466,8 @@ function mostrarResultadoErro(
             </div>
 
 
-            <button onclick="proximoQR()">
+            <button
+                onclick="proximoQR()">
 
                 📷 LER PRÓXIMO QR
 
@@ -1442,13 +1482,15 @@ function mostrarResultadoErro(
 
 
 // ========================================================
-// ERRO NORMAL
+// ERRO GERAL
 // ========================================================
 
 function mostrarErro(mensagem) {
 
     document
-        .getElementById("resultado")
+        .getElementById(
+            "resultado"
+        )
         .innerHTML =
 
         "<span class='erro'>" +
@@ -1465,31 +1507,32 @@ function mostrarErro(mensagem) {
 // ESCAPAR HTML
 // ========================================================
 
-function escapeHtml(texto) {
+function escapeHtml(valor) {
 
     return String(
-        texto === undefined ||
-        texto === null
+        valor === undefined ||
+        valor === null
             ? ""
-            : texto
+            : valor
     )
 
-        .replace(/&/g, "&amp;")
+    .replace(/&/g, "&amp;")
 
-        .replace(/</g, "&lt;")
+    .replace(/</g, "&lt;")
 
-        .replace(/>/g, "&gt;")
+    .replace(/>/g, "&gt;")
 
-        .replace(/"/g, "&quot;")
+    .replace(/"/g, "&quot;")
 
-        .replace(/'/g, "&#039;");
+    .replace(/'/g, "&#039;");
 
 }
 
 
 
 // ========================================================
-// SÓ FECHAR A CÂMARA QUANDO A PÁGINA FOR REALMENTE FECHADA
+// FECHAR CÂMARA SÓ QUANDO SAÍRES
+// REALMENTE DESTA PÁGINA
 // ========================================================
 
 window.addEventListener(
@@ -1522,7 +1565,7 @@ window.addEventListener(
 
 
 // ========================================================
-// ARRANQUE
+// INICIAR
 // ========================================================
 
 recuperarSessao();
@@ -1530,5 +1573,4 @@ recuperarSessao();
 </script>
 
 </body>
-
 </html>
