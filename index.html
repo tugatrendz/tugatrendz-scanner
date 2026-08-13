@@ -1,18 +1,15 @@
 <!DOCTYPE html>
-
 <html lang="pt-PT">
 
 <head>
 
 <meta charset="UTF-8">
 
-<meta
-name="viewport"
-content="width=device-width,initial-scale=1">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
-<meta
-name="theme-color"
-content="#050505">
+<meta name="theme-color"
+      content="#0b0b0b">
 
 <title>TugaTrendz Partners</title>
 
@@ -22,671 +19,481 @@ content="#050505">
 <style>
 
 * {
-  box-sizing:border-box;
-}
-
-
-html,
-body {
-  margin:0;
-  padding:0;
+    box-sizing:border-box;
 }
 
 
 body {
 
-  min-height:100vh;
+    margin:0;
 
-  background:
-    radial-gradient(
-      circle at 50% -15%,
-      #343434 0%,
-      #151515 28%,
-      #070707 65%,
-      #040404 100%
-    );
+    min-height:100vh;
 
-  font-family:
-    Arial,
-    Helvetica,
-    sans-serif;
+    background:
+        linear-gradient(
+            180deg,
+            #090909 0%,
+            #111 100%
+        );
 
-  color:white;
+    font-family:
+        Arial,
+        sans-serif;
+
+    color:white;
 
 }
 
 
 .app {
 
-  width:100%;
+    width:100%;
 
-  max-width:490px;
+    max-width:480px;
 
-  margin:auto;
+    margin:auto;
 
-  min-height:100vh;
+    min-height:100vh;
 
-  padding:
-    25px 18px
-    45px;
-
-}
-
-
-/* CABEÇALHO */
-
-.header {
-
-  display:flex;
-
-  flex-direction:column;
-
-  align-items:center;
-
-  margin-bottom:24px;
+    padding:
+        26px 18px
+        45px;
 
 }
 
 
-.logo {
+.top {
 
-  display:block;
+    display:flex;
 
-  width:250px;
+    justify-content:space-between;
 
-  max-width:68%;
+    align-items:center;
 
-  height:auto;
+    margin-bottom:28px;
 
 }
 
 
-.partnerBadge {
+.brand {
 
-  margin-top:7px;
+    font-size:25px;
 
-  padding:
-    6px 11px;
+    font-weight:900;
 
-  border:
-    1px solid
-    rgba(255,255,255,.1);
+    letter-spacing:-.8px;
 
-  border-radius:999px;
+}
 
-  background:
-    rgba(255,255,255,.06);
 
-  color:#999;
+.partner {
 
-  font-size:9px;
+    padding:
+        7px 10px;
 
-  letter-spacing:2.2px;
+    border-radius:999px;
 
-  font-weight:800;
+    background:
+        rgba(255,255,255,.08);
+
+    color:#aaa;
+
+    font-size:10px;
+
+    letter-spacing:1.4px;
+
+    font-weight:bold;
 
 }
 
 
 .restaurant {
 
-  margin-top:14px;
+    margin-bottom:20px;
 
-  color:#d3d3d3;
+    color:#bbb;
 
-  font-size:13px;
-
-  font-weight:700;
+    font-size:14px;
 
 }
 
-
-/* CARTÃO */
 
 .card {
 
-  background:
-    rgba(255,255,255,.98);
+    background:#fff;
 
-  color:#111;
+    color:#111;
 
-  border-radius:29px;
+    border-radius:26px;
 
-  padding:
-    27px 21px
-    30px;
+    padding:
+        24px 20px
+        28px;
 
-  box-shadow:
-    0 35px 95px
-    rgba(0,0,0,.45);
-
-}
-
-
-.title {
-
-  font-size:25px;
-
-  letter-spacing:-.8px;
-
-  font-weight:950;
+    box-shadow:
+        0 30px 80px
+        rgba(0,0,0,.3);
 
 }
 
 
-.subtitle {
+.sectionTitle {
 
-  margin-top:8px;
+    font-size:24px;
 
-  color:#777;
+    font-weight:900;
 
-  font-size:12px;
-
-  line-height:1.55;
+    letter-spacing:-.7px;
 
 }
 
 
-/* PIN */
+.sectionSub {
+
+    margin-top:7px;
+
+    color:#777;
+
+    font-size:13px;
+
+    line-height:1.5;
+
+}
+
 
 input {
 
-  width:100%;
+    width:100%;
 
-  padding:16px;
+    margin-top:22px;
 
-  margin-top:23px;
+    padding:16px;
 
-  border:
-    1px solid #ddd;
+    border:
+        1px solid #ddd;
 
-  border-radius:15px;
+    border-radius:14px;
 
-  background:#fafafa;
+    text-align:center;
 
-  color:#111;
+    font-size:20px;
 
-  font-size:20px;
+    letter-spacing:5px;
 
-  font-weight:800;
-
-  text-align:center;
-
-  letter-spacing:5px;
-
-  outline:none;
+    outline:none;
 
 }
 
 
 input:focus {
 
-  border-color:#111;
-
-  background:white;
+    border-color:#111;
 
 }
 
 
-/* BOTÕES */
-
 button {
 
-  width:100%;
+    width:100%;
 
-  padding:16px;
+    padding:16px;
 
-  margin-top:14px;
+    margin-top:14px;
 
-  border:0;
+    border:0;
 
-  border-radius:15px;
+    border-radius:14px;
 
-  background:
-    linear-gradient(
-      180deg,
-      #191919,
-      #050505
-    );
+    background:#111;
 
-  color:white;
+    color:#fff;
 
-  font-size:14px;
+    font-size:15px;
 
-  font-weight:900;
+    font-weight:800;
 
-  cursor:pointer;
+    cursor:pointer;
 
 }
 
 
 button:active {
 
-  transform:
-    scale(.985);
+    transform:
+        scale(.98);
 
 }
 
 
 button.green {
 
-  background:
-    linear-gradient(
-      180deg,
-      #1b914b,
-      #107139
-    );
+    background:#16803c;
 
 }
 
 
 button.secondary {
 
-  background:#ededed;
+    background:#eee;
 
-  color:#333;
-
-  box-shadow:none;
+    color:#222;
 
 }
 
 
 button:disabled {
 
-  opacity:.55;
+    opacity:.6;
 
 }
 
-
-/* CÂMARA */
 
 #cameraArea {
 
-  display:none;
+    display:none;
 
 }
 
 
-.cameraFrame {
+.cameraBox {
 
-  position:relative;
+    position:relative;
 
-  overflow:hidden;
+    overflow:hidden;
 
-  margin-top:21px;
+    margin-top:20px;
 
-  border-radius:22px;
+    background:#000;
 
-  background:#050505;
-
-  box-shadow:
-    0 15px 45px
-    rgba(0,0,0,.18);
+    border-radius:20px;
 
 }
 
 
 video {
 
-  display:block;
+    display:block;
 
-  width:100%;
+    width:100%;
 
-  height:auto;
-
-}
-
-
-.overlay {
-
-  position:absolute;
-
-  inset:0;
-
-  pointer-events:none;
+    height:auto;
 
 }
 
 
-.scanSquare {
+.scanOverlay {
 
-  position:absolute;
+    position:absolute;
 
-  width:64%;
+    left:17%;
 
-  aspect-ratio:1/1;
+    top:50%;
 
-  top:50%;
+    width:66%;
 
-  left:18%;
+    aspect-ratio:1/1;
 
-  transform:
-    translateY(-50%);
+    transform:
+        translateY(-50%);
 
-  border-radius:20px;
+    border:
+        3px solid white;
 
-  border:
-    2px solid
-    rgba(255,255,255,.88);
+    border-radius:18px;
 
-  box-shadow:
-    0 0 0
-    9999px
-    rgba(0,0,0,.30);
+    box-shadow:
+        0 0 0 999px
+        rgba(0,0,0,.26);
 
-}
-
-
-.scanSquare:before,
-.scanSquare:after {
-
-  content:"";
-
-  position:absolute;
-
-  width:32px;
-
-  height:32px;
-
-  border-color:white;
+    pointer-events:none;
 
 }
 
 
-.scanSquare:before {
+.corner {
 
-  left:-3px;
+    position:absolute;
 
-  top:-3px;
+    width:30px;
 
-  border-left:
-    4px solid white;
-
-  border-top:
-    4px solid white;
-
-  border-radius:
-    10px 0 0 0;
-
-}
-
-
-.scanSquare:after {
-
-  right:-3px;
-
-  bottom:-3px;
-
-  border-right:
-    4px solid white;
-
-  border-bottom:
-    4px solid white;
-
-  border-radius:
-    0 0 10px 0;
-
-}
-
-
-.scannerHint {
-
-  position:absolute;
-
-  left:0;
-
-  right:0;
-
-  bottom:17px;
-
-  color:white;
-
-  font-size:10px;
-
-  letter-spacing:1px;
-
-  text-align:center;
-
-  text-shadow:
-    0 2px 5px
-    rgba(0,0,0,.7);
+    height:30px;
 
 }
 
 
 canvas {
 
-  display:none;
+    display:none;
 
 }
 
 
-/* RESULTADO */
-
 #resultado {
 
-  margin-top:19px;
+    margin-top:18px;
 
 }
 
 
 .status {
 
-  padding:
-    14px 15px;
+    padding:
+        13px 15px;
 
-  border-radius:14px;
+    border-radius:13px;
 
-  background:#f5f5f5;
+    font-size:13px;
 
-  color:#666;
-
-  text-align:center;
-
-  font-size:12px;
-
-  line-height:1.5;
+    line-height:1.5;
 
 }
 
 
 .status.ok {
 
-  background:#eaf7ee;
+    background:#eaf7ee;
 
-  color:#137a3d;
+    color:#16803c;
 
 }
 
 
 .status.error {
 
-  background:#fff0ef;
+    background:#fff0ef;
 
-  color:#c62828;
+    color:#c62828;
 
 }
 
 
-/* OFERTA */
+.offerCard {
 
-.offer {
+    margin-top:18px;
 
-  margin-top:17px;
+    padding:22px;
 
-  padding:
-    23px 19px;
+    border-radius:18px;
 
-  border:
-    1px solid #ececec;
+    background:#f5f5f5;
 
-  border-radius:20px;
-
-  background:
-    linear-gradient(
-      180deg,
-      #fff,
-      #f7f7f7
-    );
-
-  text-align:center;
+    text-align:center;
 
 }
 
 
 .offerIcon {
 
-  width:58px;
+    width:55px;
 
-  height:58px;
+    height:55px;
 
-  display:flex;
+    margin:
+        0 auto
+        12px;
 
-  align-items:center;
+    display:flex;
 
-  justify-content:center;
+    align-items:center;
 
-  margin:
-    0 auto
-    13px;
+    justify-content:center;
 
-  border-radius:50%;
+    border-radius:50%;
 
-  background:#eaf7ee;
+    background:#eaf7ee;
 
-  color:#16803c;
-
-  font-size:27px;
-
-  font-weight:900;
+    font-size:25px;
 
 }
 
 
 .offerState {
 
-  color:#16803c;
+    color:#16803c;
 
-  font-size:19px;
+    font-size:20px;
 
-  font-weight:950;
+    font-weight:900;
 
 }
 
 
 .offerRestaurant {
 
-  margin-top:17px;
+    margin-top:16px;
 
-  color:#555;
+    font-size:18px;
 
-  font-size:13px;
-
-  font-weight:800;
+    font-weight:800;
 
 }
 
 
-.offerBenefit {
+.offerText {
 
-  margin-top:7px;
+    margin-top:8px;
 
-  font-size:24px;
+    font-size:22px;
 
-  line-height:1.1;
-
-  font-weight:950;
+    font-weight:900;
 
 }
 
 
 .offerCode {
 
-  margin-top:18px;
+    margin-top:18px;
 
-  padding:
-    12px 14px;
+    padding:
+        12px 14px;
 
-  border-radius:12px;
+    background:white;
 
-  background:#eee;
+    border-radius:12px;
 
-  font-size:15px;
+    font-size:16px;
 
-  font-weight:900;
-
-  letter-spacing:.5px;
+    font-weight:bold;
 
 }
 
 
 .visit {
 
-  margin-top:13px;
+    margin-top:12px;
 
-  color:#666;
+    color:#666;
 
-  font-size:13px;
+    font-size:14px;
 
 }
 
 
 .hidden {
 
-  display:none !important;
+    display:none !important;
 
 }
 
 
 .footer {
 
-  margin-top:20px;
+    margin-top:22px;
 
-  text-align:center;
+    text-align:center;
 
-  color:#555;
+    color:#666;
 
-  font-size:9px;
+    font-size:10px;
 
-  letter-spacing:1.4px;
-
-}
-
-
-@media(max-width:480px) {
-
-  .app {
-
-    padding:
-      21px 14px
-      40px;
-
-  }
-
-  .logo {
-
-    width:225px;
-
-    max-width:70%;
-
-  }
-
-  .card {
-
-    border-radius:25px;
-
-    padding:
-      24px 18px
-      27px;
-
-  }
+    letter-spacing:.7px;
 
 }
+
 
 </style>
 
 </head>
-
 
 
 <body>
@@ -695,148 +502,161 @@ canvas {
 <div class="app">
 
 
-<div class="header">
+    <div class="top">
 
+        <div class="brand">
 
-<img
-class="logo"
-src="https://tugatrendz.github.io/tugatrendz-scanner/logo.png?v=20260813"
-alt="TugaTrendz">
+            🔥 TugaTrendz
 
+        </div>
 
-<div class="partnerBadge">
-PARTNERS
-</div>
 
+        <div class="partner">
 
-<div
-id="nomeRestaurante"
-class="restaurant">
+            PARTNERS
 
-Portal de parceiros
+        </div>
 
-</div>
+    </div>
 
 
-</div>
 
+    <div
+        id="nomeRestaurante"
+        class="restaurant">
 
+        Portal de parceiros
 
-<div class="card">
+    </div>
 
 
-<!-- LOGIN -->
 
-<div id="loginArea">
+    <div class="card">
 
 
-<div class="title">
-Acesso profissional
-</div>
+        <!-- LOGIN -->
 
 
-<div class="subtitle">
+        <div id="loginArea">
 
-Introduz o PIN atribuído ao estabelecimento
-para iniciar a validação de ofertas.
 
-</div>
+            <div class="sectionTitle">
 
+                Acesso ao scanner
 
-<input
-id="pin"
-type="password"
-inputmode="numeric"
-autocomplete="off"
-placeholder="PIN">
+            </div>
 
 
-<button
-id="botaoEntrar"
-onclick="entrar()">
+            <div class="sectionSub">
 
-ENTRAR NO SCANNER
+                Introduz o PIN
+                atribuído ao restaurante.
 
-</button>
+            </div>
 
 
-</div>
+            <input
 
+                id="pin"
 
+                type="password"
 
-<!-- SCANNER -->
+                inputmode="numeric"
 
-<div id="cameraArea">
+                autocomplete="off"
 
+                placeholder="PIN"
 
-<div class="title">
-Validar oferta
-</div>
+            >
 
 
-<div class="subtitle">
+            <button
+                id="botaoEntrar"
+                onclick="entrar()">
 
-Enquadra o QR Code apresentado pelo cliente
-dentro da área indicada.
+                ENTRAR
 
-</div>
+            </button>
 
 
-<button
-id="botaoAbrir"
-onclick="abrirCamara()">
+        </div>
 
-📷 INICIAR SCANNER
 
-</button>
 
+        <!-- SCANNER -->
 
-<div
-id="cameraBox"
-class="cameraFrame hidden">
 
+        <div id="cameraArea">
 
-<video
-id="video"
-autoplay
-muted
-playsinline>
-</video>
 
+            <div class="sectionTitle">
 
-<div class="overlay">
+                Ler oferta
 
-<div class="scanSquare"></div>
+            </div>
 
-<div class="scannerHint">
-APONTA PARA O QR CODE
-</div>
 
-</div>
+            <div class="sectionSub">
 
+                Aponta a câmara para
+                o QR Code apresentado
+                pelo cliente.
 
-</div>
+            </div>
 
 
-<canvas id="canvas"></canvas>
+            <button
+                id="botaoAbrir"
+                onclick="abrirCamara()">
 
+                📷 ABRIR CÂMARA
 
-</div>
+            </button>
 
 
 
-<div id="resultado"></div>
+            <div
+                id="cameraBox"
+                class="cameraBox hidden">
 
+                <video
 
-</div>
+                    id="video"
 
+                    autoplay
 
+                    muted
 
-<div class="footer">
+                    playsinline>
 
-TUGATRENDZ PARTNERS · VALIDATION SYSTEM
+                </video>
 
-</div>
+
+                <div class="scanOverlay"></div>
+
+            </div>
+
+
+            <canvas id="canvas"></canvas>
+
+
+        </div>
+
+
+
+        <div id="resultado"></div>
+
+
+    </div>
+
+
+
+    <div class="footer">
+
+        TUGATRENDZ PARTNERS ·
+        SISTEMA DE VALIDAÇÃO
+
+    </div>
 
 
 </div>
@@ -845,12 +665,13 @@ TUGATRENDZ PARTNERS · VALIDATION SYSTEM
 
 <script>
 
+
 // ========================================================
-// APPS SCRIPT
+// CONFIGURAÇÃO
 // ========================================================
 
 const APPS_SCRIPT_URL =
-"https://script.google.com/macros/s/AKfycbyIH5DXiwubtkRrscwGybkECXhBHI6FSabCt4p8-1EjD3EIfZE93hq2wWfkKJL-e_mrUQ/exec";
+"https://script.google.com/macros/s/AKfycbyIH5DXiwubtkRrscwGybkECxhBHI6FSabCt4p8-1EjD3EIfZE93hq2wWfkKJL-e_mrUQ/exec";
 
 
 
@@ -859,14 +680,15 @@ const APPS_SCRIPT_URL =
 // ========================================================
 
 const parametros =
-  new URLSearchParams(
-    location.search
-  );
+    new URLSearchParams(
+        location.search
+    );
 
 
 const restauranteId =
-  parametros.get("restaurante")
-  || "R001";
+    parametros.get(
+        "restaurante"
+    ) || "R001";
 
 
 
@@ -875,10 +697,12 @@ const restauranteId =
 // ========================================================
 
 let pinRestaurante =
-  localStorage.getItem(
-    "tugatrendz_pin_" +
-    restauranteId
-  );
+    localStorage.getItem(
+
+        "tugatrendz_pin_" +
+        restauranteId
+
+    );
 
 
 let stream = null;
@@ -901,20 +725,24 @@ let ultimoQrTempo = 0;
 
 
 const video =
-  document.getElementById("video");
+    document.getElementById(
+        "video"
+    );
 
 
 const canvas =
-  document.getElementById("canvas");
+    document.getElementById(
+        "canvas"
+    );
 
 
 const ctx =
-  canvas.getContext(
-    "2d",
-    {
-      willReadFrequently:true
-    }
-  );
+    canvas.getContext(
+        "2d",
+        {
+            willReadFrequently:true
+        }
+    );
 
 
 
@@ -924,131 +752,197 @@ const ctx =
 
 function jsonp(params) {
 
-  return new Promise(
-    function(resolve, reject) {
+    return new Promise(
+
+        function(
+            resolve,
+            reject
+        ) {
 
 
-      const callback =
-        "tg_" +
-        Date.now() +
-        "_" +
-        Math.floor(
-          Math.random() *
-          100000
-        );
+            const callback =
+
+                "tg_" +
+
+                Date.now() +
+
+                "_" +
+
+                Math.floor(
+                    Math.random() *
+                    100000
+                );
 
 
-      const script =
-        document.createElement(
-          "script"
-        );
+            const script =
+                document.createElement(
+                    "script"
+                );
 
 
-      let finished = false;
+            let finished =
+                false;
 
 
-      const timeout =
-        setTimeout(
-          function() {
+            const timeout =
+                setTimeout(
 
-            if (finished) {
-              return;
+                    function() {
+
+
+                        if (
+                            finished
+                        ) {
+                            return;
+                        }
+
+
+                        finished =
+                            true;
+
+
+                        cleanup();
+
+
+                        reject(
+                            new Error(
+                                "Timeout"
+                            )
+                        );
+
+
+                    },
+
+                    15000
+
+                );
+
+
+
+            function cleanup() {
+
+
+                clearTimeout(
+                    timeout
+                );
+
+
+                try {
+
+                    delete window[
+                        callback
+                    ];
+
+                }
+                catch(e) {}
+
+
+                if (
+                    script.parentNode
+                ) {
+
+                    script
+                        .parentNode
+                        .removeChild(
+                            script
+                        );
+
+                }
+
             }
 
-            finished = true;
 
-            cleanup();
 
-            reject(
-              new Error("Timeout")
+            window[
+                callback
+            ] = function(data) {
+
+
+                if (
+                    finished
+                ) {
+                    return;
+                }
+
+
+                finished =
+                    true;
+
+
+                cleanup();
+
+
+                resolve(
+                    data
+                );
+
+            };
+
+
+
+            const query =
+                new URLSearchParams(
+                    params
+                );
+
+
+            query.set(
+                "callback",
+                callback
             );
 
-          },
-          15000
-        );
+
+            query.set(
+                "_",
+                Date.now()
+            );
 
 
+            script.src =
 
-      function cleanup() {
+                APPS_SCRIPT_URL +
 
-        clearTimeout(timeout);
+                "?" +
 
-        try {
-          delete window[callback];
+                query.toString();
+
+
+            script.onerror =
+                function() {
+
+
+                    if (
+                        finished
+                    ) {
+                        return;
+                    }
+
+
+                    finished =
+                        true;
+
+
+                    cleanup();
+
+
+                    reject(
+                        new Error(
+                            "Ligação"
+                        )
+                    );
+
+                };
+
+
+            document.body
+                .appendChild(
+                    script
+                );
+
         }
-        catch(e) {}
 
-        if (script.parentNode) {
-          script.parentNode.removeChild(script);
-        }
+    );
 
-      }
-
-
-
-      window[callback] =
-        function(data) {
-
-          if (finished) {
-            return;
-          }
-
-          finished = true;
-
-          cleanup();
-
-          resolve(data);
-
-        };
-
-
-
-      const query =
-        new URLSearchParams(params);
-
-
-      query.set(
-        "callback",
-        callback
-      );
-
-
-      query.set(
-        "_",
-        Date.now()
-      );
-
-
-      script.src =
-        APPS_SCRIPT_URL +
-        "?" +
-        query.toString();
-
-
-      script.onerror =
-        function() {
-
-          if (finished) {
-            return;
-          }
-
-          finished = true;
-
-          cleanup();
-
-          reject(
-            new Error("Ligação")
-          );
-
-        };
-
-
-      document.body.appendChild(
-        script
-      );
-
-    }
-  );
 }
 
 
@@ -1059,96 +953,122 @@ function jsonp(params) {
 
 async function entrar() {
 
-  const pin =
-    document
-      .getElementById("pin")
-      .value
-      .trim();
+
+    const pin =
+
+        document
+            .getElementById(
+                "pin"
+            )
+            .value
+            .trim();
 
 
-  if (!pin) {
+    if (!pin) {
 
-    erroGeral(
-      "Introduz o PIN."
-    );
+        erroGeral(
+            "Introduz o PIN."
+        );
 
-    return;
-  }
+        return;
 
-
-  const botao =
-    document.getElementById(
-      "botaoEntrar"
-    );
-
-
-  botao.disabled = true;
-
-
-  status(
-    "A validar acesso...",
-    ""
-  );
-
-
-  try {
-
-    const resposta =
-      await jsonp({
-
-        api:"pin",
-
-        restaurante:
-          restauranteId,
-
-        pin:pin
-
-      });
-
-
-    if (!resposta.ok) {
-
-      erroGeral(
-        resposta.mensagem ||
-        "PIN inválido."
-      );
-
-      botao.disabled = false;
-
-      return;
     }
 
 
-    pinRestaurante = pin;
+    const botao =
+        document
+            .getElementById(
+                "botaoEntrar"
+            );
 
 
-    localStorage.setItem(
+    botao.disabled =
+        true;
 
-      "tugatrendz_pin_" +
-      restauranteId,
 
-      pin
-
+    status(
+        "A validar acesso...",
+        ""
     );
 
 
-    entrarScanner(
-      resposta.restaurante
-    );
+    try {
 
-  }
 
-  catch(e) {
+        const resposta =
+            await jsonp({
 
-    console.error(e);
+                api:"pin",
 
-    erroGeral(
-      "Não foi possível ligar ao sistema."
-    );
+                restaurante:
+                    restauranteId,
 
-    botao.disabled = false;
+                pin:pin
 
-  }
+            });
+
+
+
+        if (
+            !resposta.ok
+        ) {
+
+
+            erroGeral(
+                resposta.mensagem ||
+                "PIN inválido."
+            );
+
+
+            botao.disabled =
+                false;
+
+
+            return;
+
+        }
+
+
+        pinRestaurante =
+            pin;
+
+
+        localStorage.setItem(
+
+            "tugatrendz_pin_" +
+            restauranteId,
+
+            pin
+
+        );
+
+
+        entrarScanner(
+            resposta.restaurante
+        );
+
+
+    }
+
+    catch(e) {
+
+
+        console.error(e);
+
+
+        erroGeral(
+
+            "Não foi possível " +
+            "ligar ao sistema."
+
+        );
+
+
+        botao.disabled =
+            false;
+
+    }
+
 }
 
 
@@ -1159,252 +1079,319 @@ async function entrar() {
 
 async function recuperarSessao() {
 
-  if (!pinRestaurante) {
-    return;
-  }
 
+    if (
+        !pinRestaurante
+    ) {
 
-  try {
+        return;
 
-    const resposta =
-      await jsonp({
-
-        api:"pin",
-
-        restaurante:
-          restauranteId,
-
-        pin:
-          pinRestaurante
-
-      });
-
-
-    if (!resposta.ok) {
-
-      localStorage.removeItem(
-
-        "tugatrendz_pin_" +
-        restauranteId
-
-      );
-
-      pinRestaurante = null;
-
-      return;
     }
 
 
-    entrarScanner(
-      resposta.restaurante
-    );
+    try {
 
-  }
 
-  catch(e) {
+        const resposta =
+            await jsonp({
 
-    console.error(e);
+                api:"pin",
 
-  }
+                restaurante:
+                    restauranteId,
+
+                pin:
+                    pinRestaurante
+
+            });
+
+
+
+        if (
+            !resposta.ok
+        ) {
+
+
+            localStorage
+                .removeItem(
+
+                    "tugatrendz_pin_" +
+                    restauranteId
+
+                );
+
+
+            pinRestaurante =
+                null;
+
+
+            return;
+
+        }
+
+
+        entrarScanner(
+            resposta.restaurante
+        );
+
+
+    }
+
+    catch(e) {
+
+        console.error(e);
+
+    }
+
 }
 
 
 
 // ========================================================
-// ENTRAR NO SCANNER
+// ABRIR ÁREA SCANNER
 // ========================================================
 
-function entrarScanner(restaurante) {
-
-  document
-    .getElementById(
-      "nomeRestaurante"
-    )
-    .textContent =
-    restaurante;
+function entrarScanner(
+    restaurante
+) {
 
 
-  document
-    .getElementById(
-      "loginArea"
-    )
-    .style.display =
-    "none";
+    document
+        .getElementById(
+            "nomeRestaurante"
+        )
+        .textContent =
+        restaurante;
 
 
-  document
-    .getElementById(
-      "cameraArea"
-    )
-    .style.display =
-    "block";
+    document
+        .getElementById(
+            "loginArea"
+        )
+        .style.display =
+        "none";
 
 
-  document
-    .getElementById(
-      "resultado"
-    )
-    .innerHTML =
-    "";
+    document
+        .getElementById(
+            "cameraArea"
+        )
+        .style.display =
+        "block";
+
+
+    document
+        .getElementById(
+            "resultado"
+        )
+        .innerHTML =
+        "";
 
 }
 
 
 
 // ========================================================
-// ABRIR CÂMARA
+// CÂMARA
 // ========================================================
 
 async function abrirCamara() {
 
-  if (
-    cameraAberta &&
-    stream &&
-    stream.active
-  ) {
 
-    processamento = false;
-
-    detecaoAtiva = true;
+    if (
+        cameraAberta &&
+        stream &&
+        stream.active
+    ) {
 
 
-    document
-      .getElementById(
-        "cameraBox"
-      )
-      .classList
-      .remove("hidden");
+        processamento =
+            false;
 
 
-    document
-      .getElementById(
-        "botaoAbrir"
-      )
-      .classList
-      .add("hidden");
+        detecaoAtiva =
+            true;
 
 
-    iniciarLoop();
-
-    return;
-  }
-
-
-  status(
-    "A iniciar câmara...",
-    ""
-  );
+        document
+            .getElementById(
+                "cameraBox"
+            )
+            .classList
+            .remove(
+                "hidden"
+            );
 
 
-  try {
-
-    stream =
-      await navigator
-        .mediaDevices
-        .getUserMedia({
-
-          audio:false,
-
-          video:{
-
-            facingMode:{
-              ideal:"environment"
-            },
-
-            width:{
-              ideal:1280
-            },
-
-            height:{
-              ideal:720
-            }
-
-          }
-
-        });
+        document
+            .getElementById(
+                "botaoAbrir"
+            )
+            .classList
+            .add(
+                "hidden"
+            );
 
 
-    video.srcObject = stream;
-
-    await video.play();
+        iniciarLoop();
 
 
-    cameraAberta = true;
+        return;
 
-    detecaoAtiva = true;
-
-    processamento = false;
-
-
-    document
-      .getElementById(
-        "botaoAbrir"
-      )
-      .classList
-      .add("hidden");
-
-
-    document
-      .getElementById(
-        "cameraBox"
-      )
-      .classList
-      .remove("hidden");
+    }
 
 
     status(
-      "Scanner ativo · pronto para ler",
-      "ok"
+        "A abrir a câmara...",
+        ""
     );
 
 
-    iniciarLoop();
-
-  }
-
-  catch(e) {
-
-    console.error(e);
+    try {
 
 
-    let mensagem =
-      "Não foi possível abrir a câmara.";
+        stream =
+
+            await navigator
+                .mediaDevices
+                .getUserMedia({
+
+                    audio:false,
+
+                    video:{
+
+                        facingMode:{
+                            ideal:
+                            "environment"
+                        },
+
+                        width:{
+                            ideal:1280
+                        },
+
+                        height:{
+                            ideal:720
+                        }
+
+                    }
+
+                });
 
 
-    if (
-      e.name ===
-      "NotAllowedError"
-    ) {
+        video.srcObject =
+            stream;
 
-      mensagem =
-        "O acesso à câmara não foi autorizado. Verifica as permissões do navegador.";
+
+        await video.play();
+
+
+        cameraAberta =
+            true;
+
+
+        detecaoAtiva =
+            true;
+
+
+        processamento =
+            false;
+
+
+        document
+            .getElementById(
+                "botaoAbrir"
+            )
+            .classList
+            .add(
+                "hidden"
+            );
+
+
+        document
+            .getElementById(
+                "cameraBox"
+            )
+            .classList
+            .remove(
+                "hidden"
+            );
+
+
+        status(
+
+            "Câmara pronta. " +
+            "Aponta para o QR Code.",
+
+            "ok"
+
+        );
+
+
+        iniciarLoop();
+
 
     }
 
-    else if (
-      e.name ===
-      "NotReadableError"
-    ) {
+    catch(e) {
 
-      mensagem =
-        "A câmara está ocupada por outra aplicação.";
+
+        console.error(e);
+
+
+        let mensagem =
+
+            "Não foi possível " +
+            "abrir a câmara.";
+
+
+        if (
+            e.name ===
+            "NotAllowedError"
+        ) {
+
+
+            mensagem =
+
+                "O acesso à câmara " +
+                "não foi autorizado.";
+
+        }
+
+
+        else if (
+            e.name ===
+            "NotReadableError"
+        ) {
+
+
+            mensagem =
+
+                "A câmara está a ser " +
+                "utilizada por outra aplicação.";
+
+        }
+
+
+        else if (
+            e.name ===
+            "NotFoundError"
+        ) {
+
+
+            mensagem =
+
+                "Não foi encontrada " +
+                "nenhuma câmara.";
+
+        }
+
+
+        erroGeral(
+            mensagem
+        );
 
     }
 
-    else if (
-      e.name ===
-      "NotFoundError"
-    ) {
-
-      mensagem =
-        "Não foi encontrada nenhuma câmara.";
-
-    }
-
-
-    erroGeral(mensagem);
-
-  }
 }
 
 
@@ -1415,63 +1402,78 @@ async function abrirCamara() {
 
 function iniciarLoop() {
 
-  if (frameId) {
-
-    cancelAnimationFrame(
-      frameId
-    );
-
-    frameId = null;
-
-  }
-
-
-  function loop(timestamp) {
 
     if (
-      !cameraAberta ||
-      !stream
+        frameId
     ) {
-      return;
+
+
+        cancelAnimationFrame(
+            frameId
+        );
+
+
+        frameId =
+            null;
+
     }
 
 
-    if (
-      timestamp -
-      ultimoFrame >=
-      140
+
+    function loop(
+        timestamp
     ) {
 
-      ultimoFrame =
-        timestamp;
+
+        if (
+            !cameraAberta ||
+            !stream
+        ) {
+
+            return;
+
+        }
 
 
-      if (
-        detecaoAtiva &&
-        !processamento &&
-        video.readyState >= 2 &&
-        video.videoWidth > 0
-      ) {
+        if (
+            timestamp -
+            ultimoFrame
+            >= 140
+        ) {
 
-        analisar();
 
-      }
+            ultimoFrame =
+                timestamp;
+
+
+            if (
+                detecaoAtiva &&
+                !processamento &&
+                video.readyState >= 2 &&
+                video.videoWidth > 0
+            ) {
+
+
+                analisar();
+
+            }
+
+        }
+
+
+        frameId =
+            requestAnimationFrame(
+                loop
+            );
 
     }
 
 
     frameId =
-      requestAnimationFrame(
-        loop
-      );
+        requestAnimationFrame(
+            loop
+        );
 
-  }
-
-
-  frameId =
-    requestAnimationFrame(
-      loop
-    );
 }
 
 
@@ -1482,174 +1484,222 @@ function iniciarLoop() {
 
 function analisar() {
 
-  canvas.width =
-    video.videoWidth;
 
-  canvas.height =
-    video.videoHeight;
+    canvas.width =
+        video.videoWidth;
 
 
-  ctx.drawImage(
-
-    video,
-
-    0,
-    0,
-
-    canvas.width,
-    canvas.height
-
-  );
+    canvas.height =
+        video.videoHeight;
 
 
-  const imagem =
-    ctx.getImageData(
+    ctx.drawImage(
 
-      0,
-      0,
+        video,
 
-      canvas.width,
-      canvas.height
+        0,
+        0,
+
+        canvas.width,
+        canvas.height
 
     );
 
 
-  const qr =
-    jsQR(
+    const imagem =
+        ctx.getImageData(
 
-      imagem.data,
+            0,
+            0,
 
-      imagem.width,
+            canvas.width,
+            canvas.height
 
-      imagem.height,
+        );
 
-      {
-        inversionAttempts:
-          "attemptBoth"
-      }
 
+    const qr =
+        jsQR(
+
+            imagem.data,
+
+            imagem.width,
+
+            imagem.height,
+
+            {
+                inversionAttempts:
+                    "attemptBoth"
+            }
+
+        );
+
+
+    if (
+        !qr ||
+        !qr.data
+    ) {
+
+        return;
+
+    }
+
+
+    const agora =
+        Date.now();
+
+
+    if (
+        qr.data ===
+        ultimoQr &&
+
+        agora -
+        ultimoQrTempo <
+        3000
+    ) {
+
+        return;
+
+    }
+
+
+    ultimoQr =
+        qr.data;
+
+
+    ultimoQrTempo =
+        agora;
+
+
+    processarQR(
+        qr.data
     );
 
-
-  if (
-    !qr ||
-    !qr.data
-  ) {
-    return;
-  }
-
-
-  const agora =
-    Date.now();
-
-
-  if (
-    qr.data === ultimoQr &&
-    agora - ultimoQrTempo < 3000
-  ) {
-    return;
-  }
-
-
-  ultimoQr =
-    qr.data;
-
-
-  ultimoQrTempo =
-    agora;
-
-
-  processarQR(
-    qr.data
-  );
 }
 
 
 
 // ========================================================
-// PROCESSAR QR
+// PROCESSAR
 // ========================================================
 
-async function processarQR(texto) {
-
-  if (processamento) {
-    return;
-  }
+async function processarQR(
+    texto
+) {
 
 
-  processamento = true;
+    if (
+        processamento
+    ) {
 
-  detecaoAtiva = false;
+        return;
 
-
-  status(
-    "A verificar oferta...",
-    ""
-  );
-
-
-  const codigo =
-    extrairCodigo(texto);
-
-
-  if (!codigo) {
-
-    erroScan(
-      "Este QR Code não pertence à TugaTrendz."
-    );
-
-    return;
-  }
-
-
-  codigoAtual = codigo;
-
-
-  try {
-
-    const resposta =
-      await jsonp({
-
-        api:"validar",
-
-        restaurante:
-          restauranteId,
-
-        pin:
-          pinRestaurante,
-
-        codigo:
-          codigo
-
-      });
-
-
-    if (!resposta.ok) {
-
-      erroScan(
-        resposta.mensagem ||
-        "Oferta inválida."
-      );
-
-      return;
     }
 
 
-    mostrarOferta(
-      resposta
+    processamento =
+        true;
+
+
+    detecaoAtiva =
+        false;
+
+
+    status(
+        "A validar oferta...",
+        ""
     );
 
-  }
 
-  catch(e) {
+    const codigo =
+        extrairCodigo(
+            texto
+        );
 
-    console.error(e);
 
-    erroScan(
-      "Não foi possível validar a oferta."
-    );
+    if (
+        !codigo
+    ) {
 
-  }
+
+        erroScan(
+
+            "Este QR Code " +
+            "não pertence à TugaTrendz."
+
+        );
+
+
+        return;
+
+    }
+
+
+    codigoAtual =
+        codigo;
+
+
+    try {
+
+
+        const resposta =
+            await jsonp({
+
+                api:"validar",
+
+                restaurante:
+                    restauranteId,
+
+                pin:
+                    pinRestaurante,
+
+                codigo:
+                    codigo
+
+            });
+
+
+
+        if (
+            !resposta.ok
+        ) {
+
+
+            erroScan(
+
+                resposta.mensagem ||
+                "Oferta inválida."
+
+            );
+
+
+            return;
+
+        }
+
+
+        mostrarOferta(
+            resposta
+        );
+
+
+    }
+
+    catch(e) {
+
+
+        console.error(e);
+
+
+        erroScan(
+
+            "Não foi possível " +
+            "validar a oferta."
+
+        );
+
+    }
+
 }
 
 
@@ -1658,53 +1708,69 @@ async function processarQR(texto) {
 // EXTRAIR CÓDIGO
 // ========================================================
 
-function extrairCodigo(texto) {
-
-  const valor =
-    String(texto || "")
-      .trim();
+function extrairCodigo(
+    texto
+) {
 
 
-  const match =
-    valor.match(
-      /TGT-[A-Z0-9]+/i
-    );
+    const valor =
+        String(
+            texto || ""
+        )
+        .trim();
 
 
-  if (match) {
-
-    return match[0]
-      .toUpperCase();
-
-  }
+    const match =
+        valor.match(
+            /TGT-[A-Z0-9]+/i
+        );
 
 
-  try {
-
-    const url =
-      new URL(valor);
-
-
-    const codigo =
-      url.searchParams.get(
-        "codigo"
-      );
+    if (
+        match
+    ) {
 
 
-    if (codigo) {
-
-      return codigo
-        .trim()
-        .toUpperCase();
+        return match[0]
+            .toUpperCase();
 
     }
 
-  }
 
-  catch(e) {}
+    try {
 
 
-  return null;
+        const url =
+            new URL(
+                valor
+            );
+
+
+        const codigo =
+            url.searchParams
+                .get(
+                    "codigo"
+                );
+
+
+        if (
+            codigo
+        ) {
+
+
+            return codigo
+                .trim()
+                .toUpperCase();
+
+        }
+
+    }
+
+    catch(e) {}
+
+
+    return null;
+
 }
 
 
@@ -1713,215 +1779,267 @@ function extrairCodigo(texto) {
 // MOSTRAR OFERTA
 // ========================================================
 
-function mostrarOferta(dados) {
-
-  document
-    .getElementById(
-      "resultado"
-    )
-    .innerHTML = `
-
-<div class="offer">
+function mostrarOferta(
+    dados
+) {
 
 
-<div class="offerIcon">
-✓
-</div>
+    document
+        .getElementById(
+            "resultado"
+        )
+        .innerHTML = `
+
+        <div class="offerCard">
 
 
-<div class="offerState">
-OFERTA VÁLIDA
-</div>
+            <div class="offerIcon">
+
+                ✓
+
+            </div>
 
 
-<div class="offerRestaurant">
-${escapeHtml(dados.restaurante)}
-</div>
+            <div class="offerState">
+
+                OFERTA VÁLIDA
+
+            </div>
 
 
-<div class="offerBenefit">
-🎁 ${escapeHtml(dados.oferta)}
-</div>
+            <div class="offerRestaurant">
+
+                ${escapeHtml(
+                    dados.restaurante
+                )}
+
+            </div>
 
 
-<div class="offerCode">
-${escapeHtml(dados.codigo)}
-</div>
+            <div class="offerText">
+
+                🎁 ${escapeHtml(
+                    dados.oferta
+                )}
+
+            </div>
 
 
-<button
-class="green"
-onclick="confirmarUtilizacao()">
+            <div class="offerCode">
 
-CONFIRMAR UTILIZAÇÃO
+                ${escapeHtml(
+                    dados.codigo
+                )}
 
-</button>
-
-
-<button
-class="secondary"
-onclick="proximoQR()">
-
-CANCELAR
-
-</button>
+            </div>
 
 
-</div>
+            <button
+                class="green"
+                onclick="confirmarUtilizacao()">
 
-  `;
+                CONFIRMAR UTILIZAÇÃO
+
+            </button>
+
+
+            <button
+                class="secondary"
+                onclick="proximoQR()">
+
+                CANCELAR / LER OUTRO
+
+            </button>
+
+
+        </div>
+
+    `;
+
 }
 
 
 
 // ========================================================
-// CONFIRMAR UTILIZAÇÃO
+// CONFIRMAR
 // ========================================================
 
 async function confirmarUtilizacao() {
 
-  if (!codigoAtual) {
-    return;
-  }
 
+    if (
+        !codigoAtual
+    ) {
 
-  status(
-    "A registar visita...",
-    ""
-  );
+        return;
 
-
-  try {
-
-    const resposta =
-      await jsonp({
-
-        api:"utilizar",
-
-        restaurante:
-          restauranteId,
-
-        pin:
-          pinRestaurante,
-
-        codigo:
-          codigoAtual
-
-      });
-
-
-    if (!resposta.ok) {
-
-      erroScan(
-        resposta.mensagem ||
-        "Não foi possível confirmar."
-      );
-
-      return;
     }
 
 
-    document
-      .getElementById(
-        "resultado"
-      )
-      .innerHTML = `
-
-<div class="offer">
-
-
-<div class="offerIcon">
-✓
-</div>
-
-
-<div class="offerState">
-UTILIZAÇÃO CONFIRMADA
-</div>
-
-
-<div class="offerRestaurant">
-${escapeHtml(resposta.restaurante)}
-</div>
-
-
-<div class="visit">
-Visita #${escapeHtml(resposta.visita)}
-</div>
-
-
-<div class="offerCode">
-${escapeHtml(resposta.codigo)}
-</div>
-
-
-<button
-onclick="proximoQR()">
-
-📷 LER PRÓXIMO QR
-
-</button>
-
-
-</div>
-
-    `;
-
-  }
-
-  catch(e) {
-
-    console.error(e);
-
-    erroScan(
-      "Não foi possível registar a utilização."
+    status(
+        "A registar utilização...",
+        ""
     );
 
-  }
+
+    try {
+
+
+        const resposta =
+            await jsonp({
+
+                api:"utilizar",
+
+                restaurante:
+                    restauranteId,
+
+                pin:
+                    pinRestaurante,
+
+                codigo:
+                    codigoAtual
+
+            });
+
+
+
+        if (
+            !resposta.ok
+        ) {
+
+
+            erroScan(
+
+                resposta.mensagem ||
+                "Não foi possível registar."
+
+            );
+
+
+            return;
+
+        }
+
+
+        document
+            .getElementById(
+                "resultado"
+            )
+            .innerHTML = `
+
+            <div class="offerCard">
+
+
+                <div class="offerIcon">
+
+                    ✓
+
+                </div>
+
+
+                <div class="offerState">
+
+                    UTILIZAÇÃO CONFIRMADA
+
+                </div>
+
+
+                <div class="offerRestaurant">
+
+                    ${escapeHtml(
+                        resposta.restaurante
+                    )}
+
+                </div>
+
+
+                <div class="visit">
+
+                    Visita #${escapeHtml(
+                        resposta.visita
+                    )}
+
+                </div>
+
+
+                <div class="offerCode">
+
+                    ${escapeHtml(
+                        resposta.codigo
+                    )}
+
+                </div>
+
+
+                <button
+                    onclick="proximoQR()">
+
+                    📷 LER PRÓXIMO QR
+
+                </button>
+
+
+            </div>
+
+        `;
+
+
+    }
+
+    catch(e) {
+
+
+        console.error(e);
+
+
+        erroScan(
+
+            "Não foi possível " +
+            "registar a utilização."
+
+        );
+
+    }
+
 }
 
 
 
 // ========================================================
-// PRÓXIMO QR
+// PRÓXIMO
 // ========================================================
 
 function proximoQR() {
 
-  codigoAtual = null;
 
-  processamento = false;
-
-  detecaoAtiva = true;
-
-  ultimoQr = "";
-
-  ultimoQrTempo = 0;
+    codigoAtual =
+        null;
 
 
-  document
-    .getElementById(
-      "cameraBox"
-    )
-    .classList
-    .remove("hidden");
+    processamento =
+        false;
 
 
-  document
-    .getElementById(
-      "botaoAbrir"
-    )
-    .classList
-    .add("hidden");
+    detecaoAtiva =
+        true;
 
 
-  status(
-    "Scanner ativo · pronto para o próximo QR.",
-    "ok"
-  );
+    ultimoQr =
+        "";
 
 
-  iniciarLoop();
+    ultimoQrTempo =
+        0;
+
+
+    status(
+
+        "Pronto para o próximo QR.",
+
+        "ok"
+
+    );
+
 }
 
 
@@ -1930,24 +2048,37 @@ function proximoQR() {
 // STATUS
 // ========================================================
 
-function status(mensagem, tipo) {
-
-  const classe =
-    tipo === "ok"
-    ? "status ok"
-    : "status";
+function status(
+    mensagem,
+    tipo
+) {
 
 
-  document
-    .getElementById(
-      "resultado"
-    )
-    .innerHTML =
-      '<div class="' +
-      classe +
-      '">' +
-      escapeHtml(mensagem) +
-      '</div>';
+    const classe =
+
+        tipo === "ok"
+
+        ? "status ok"
+
+        : "status";
+
+
+    document
+        .getElementById(
+            "resultado"
+        )
+        .innerHTML =
+
+        '<div class="' +
+        classe +
+        '">' +
+
+        escapeHtml(
+            mensagem
+        ) +
+
+        '</div>';
+
 }
 
 
@@ -1956,105 +2087,157 @@ function status(mensagem, tipo) {
 // ERRO SCAN
 // ========================================================
 
-function erroScan(mensagem) {
+function erroScan(
+    mensagem
+) {
 
-  document
-    .getElementById(
-      "resultado"
+
+    document
+        .getElementById(
+            "resultado"
+        )
+        .innerHTML = `
+
+        <div class="offerCard">
+
+            <div
+                class="status error">
+
+                ${escapeHtml(
+                    mensagem
+                )}
+
+            </div>
+
+
+            <button
+                class="secondary"
+                onclick="proximoQR()">
+
+                📷 LER OUTRO QR
+
+            </button>
+
+        </div>
+
+    `;
+
+}
+
+
+
+// ========================================================
+// ERRO
+// ========================================================
+
+function erroGeral(
+    mensagem
+) {
+
+
+    document
+        .getElementById(
+            "resultado"
+        )
+        .innerHTML =
+
+        '<div class="status error">' +
+
+        escapeHtml(
+            mensagem
+        ) +
+
+        '</div>';
+
+}
+
+
+
+// ========================================================
+// ESCAPAR
+// ========================================================
+
+function escapeHtml(
+    texto
+) {
+
+
+    return String(
+
+        texto === undefined ||
+        texto === null
+
+        ? ""
+
+        : texto
+
     )
-    .innerHTML = `
 
-<div class="offer">
-
-
-<div class="status error">
-
-${escapeHtml(mensagem)}
-
-</div>
-
-
-<button
-class="secondary"
-onclick="proximoQR()">
-
-📷 LER OUTRO QR
-
-</button>
-
-
-</div>
-
-  `;
-}
-
-
-
-// ========================================================
-// ERRO GERAL
-// ========================================================
-
-function erroGeral(mensagem) {
-
-  document
-    .getElementById(
-      "resultado"
+    .replace(
+        /&/g,
+        "&amp;"
     )
-    .innerHTML =
-      '<div class="status error">' +
-      escapeHtml(mensagem) +
-      '</div>';
+
+    .replace(
+        /</g,
+        "&lt;"
+    )
+
+    .replace(
+        />/g,
+        "&gt;"
+    )
+
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
 }
 
 
 
 // ========================================================
-// ESCAPAR HTML
-// ========================================================
-
-function escapeHtml(texto) {
-
-  return String(
-    texto === undefined ||
-    texto === null
-    ? ""
-    : texto
-  )
-
-  .replace(/&/g, "&amp;")
-
-  .replace(/</g, "&lt;")
-
-  .replace(/>/g, "&gt;")
-
-  .replace(/"/g, "&quot;")
-
-  .replace(/'/g, "&#039;");
-}
-
-
-
-// ========================================================
-// PARAR CÂMARA SÓ QUANDO SAIR DA PÁGINA
+// FECHAR CÂMARA AO SAIR
 // ========================================================
 
 window.addEventListener(
-  "pagehide",
-  function() {
 
-    if (!stream) {
-      return;
+    "pagehide",
+
+    function() {
+
+
+        if (
+            !stream
+        ) {
+
+            return;
+
+        }
+
+
+        stream
+            .getTracks()
+            .forEach(
+
+                function(
+                    track
+                ) {
+
+                    track.stop();
+
+                }
+
+            );
+
     }
 
-    stream
-      .getTracks()
-      .forEach(
-        function(track) {
-          track.stop();
-        }
-      );
-
-  }
 );
 
 
@@ -2065,8 +2248,8 @@ window.addEventListener(
 
 recuperarSessao();
 
-</script>
 
+</script>
 
 </body>
 </html>
