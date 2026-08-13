@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>TugaTrendz - Scanner</title>
+
+<script src="https://unpkg.com/html5-qrcode"></script>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+
+    margin: 0;
+
+    padding: 20px;
+
+    background: #f5f5f5;
+
+    font-family: Arial, sans-serif;
+
+    text-align: center;
+
+}
+
+.container {
+
+    width: 100%;
+
+    max-width: 430px;
+
+    margin: auto;
+
+    background: white;
+
+    border-radius: 20px;
+
+    padding: 25px 20px 30px;
+
+    box-shadow:
+        0 5px 25px rgba(0,0,0,0.08);
+
+}
+
+.logo {
+
+    font-size: 30px;
+
+    font-weight: bold;
+
+    margin-bottom: 5px;
+
+}
+
+.subtitulo {
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    margin-bottom: 25px;
+
+}
+
+.instrucao {
+
+    color: #666;
+
+    margin-bottom: 20px;
+
+}
+
+#reader {
+
+    width: 100%;
+
+    margin: auto;
+
+}
+
+.estado {
+
+    margin-top: 20px;
+
+    font-size: 16px;
+
+}
+
+.erro {
+
+    color: #d93025;
+
+    font-weight: bold;
+
+}
+
+.sucesso {
+
+    color: #16803c;
+
+    font-weight: bold;
+
+}
+
+button {
+
+    width: 100%;
+
+    padding: 15px;
+
+    margin-top: 20px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #111;
+
+    color: white;
+
+    font-size: 17px;
+
+    cursor: pointer;
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <div class="logo">
+        🔥 TugaTrendz
+    </div>
+
+
+    <div class="subtitulo">
+        Scanner de ofertas
+    </div>
+
+
+    <p class="instrucao">
+
+        Aponta a câmara para o QR Code
+        apresentado pelo cliente.
+
+    </p>
+
+
+    <div id="reader"></div>
+
+
+    <div id="estado"
+         class="estado">
+
+        A iniciar câmara...
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+
+// =====================================================
+// CONFIGURAÇÃO
+// =====================================================
+
+
+// COLOCA AQUI O ENDEREÇO DA TUA APLICAÇÃO
+// DO GOOGLE APPS SCRIPT.
+//
+// EXEMPLO:
+// https://script.google.com/macros/s/XXXXXXXXXXXX/exec
+
+const APPS_SCRIPT_URL =
+"https://script.google.com/macros/s/AKfycbyIH5DXiwubtkRrscwGybkECxhBHI6FSabCt4p8-1EjD3EIfZE93hq2wWfkKJL-e_mrUQ/exec";
+
+
+
+// =====================================================
+// SCANNER
+// =====================================================
+
+let scanner = null;
+
+let codigoJaLido = false;
+
+
+
+function iniciarScanner() {
+
+
+    scanner =
+        new Html5Qrcode("reader");
+
+
+    const configuracao = {
+
+        fps: 10,
+
+        qrbox: {
+
+            width: 250,
+
+            height: 250
+
+        }
+
+    };
+
+
+    scanner.start(
+
+        {
+            facingMode: "environment"
+        },
+
+        configuracao,
+
+
+        function(decodedText) {
+
+
+            if (codigoJaLido) {
+                return;
+            }
+
+
+            codigoJaLido = true;
+
+
+            document
+                .getElementById("estado")
+                .innerHTML =
+                "✅ QR Code encontrado. A abrir oferta...";
+
+
+            try {
+
+                scanner.stop();
+
+            }
+
+            catch (erro) {
+
+                console.log(erro);
+
+            }
+
+
+            processarQR(decodedText);
+
+        },
+
+
+        function(errorMessage) {
+
+            // Ignorar erros normais
+            // enquanto procura o QR Code.
+
+        }
+
+    )
+
+    .catch(function(error) {
+
+
+        document
+            .getElementById("estado")
+            .innerHTML =
+
+            "<span class='erro'>" +
+
+            "❌ Não foi possível abrir a câmara." +
+
+            "<br><br>" +
+
+            "Verifica se deste permissão à câmara." +
+
+            "</span>";
+
+
+        console.error(error);
+
+    });
+
+}
+
+
+
+// =====================================================
+// PROCESSAR QR
+// =====================================================
+
+function processarQR(decodedText) {
+
+
+    let codigo = "";
+
+
+    try {
+
+
+        // O QR normalmente contém
+        // o endereço do Apps Script.
+
+
+        const url =
+            new URL(decodedText);
+
+
+        codigo =
+            url.searchParams.get("codigo");
+
+
+    }
+
+    catch (erro) {
+
+
+        // Se o QR contiver apenas
+        // o código TGT-XXXXXX
+
+
+        codigo =
+            decodedText.trim();
+
+    }
+
+
+    if (!codigo) {
+
+
+        document
+            .getElementById("estado")
+            .innerHTML =
+
+            "<span class='erro'>" +
+
+            "❌ QR Code inválido." +
+
+            "</span>";
+
+
+        codigoJaLido = false;
+
+        return;
+
+    }
+
+
+    // =================================================
+    // ENVIAR PARA O APPS SCRIPT
+    // =================================================
+
+
+    const destino =
+
+        APPS_SCRIPT_URL +
+
+        "?acao=validar&codigo=" +
+
+        encodeURIComponent(codigo);
+
+
+    window.location.href =
+        destino;
+
+}
+
+
+
+// =====================================================
+// INICIAR
+// =====================================================
+
+window.addEventListener(
+    "load",
+    iniciarScanner
+);
+
+
+</script>
+
+
+</body>
+
+</html>
